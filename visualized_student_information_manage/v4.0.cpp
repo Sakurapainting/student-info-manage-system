@@ -8,18 +8,18 @@
 #include <string>
 
 
-#define MAX_STUNUM 30             //Ä³°àÑ§Éú×î¶à²»³¬¹ı30ÈË
-#define MAX_COURSENUM 6           //¿¼ÊÔ¿ÆÄ¿×î¶à²»³¬¹ı6ÃÅ
-#define MAX_NAMENUM 20            //Ñ§ÉúĞÕÃû×Ö·ûÊı²»³¬¹ı20
+#define MAX_STUNUM 30             //æŸç­å­¦ç”Ÿæœ€å¤šä¸è¶…è¿‡30äºº
+#define MAX_COURSENUM 6           //è€ƒè¯•ç§‘ç›®æœ€å¤šä¸è¶…è¿‡6é—¨
+#define MAX_NAMENUM 20            //å­¦ç”Ÿå§“åå­—ç¬¦æ•°ä¸è¶…è¿‡20
 
-// ¶¨Òå½á¹¹Ìå
+// å®šä¹‰ç»“æ„ä½“
 typedef struct {
     char name[MAX_NAMENUM];
     long id;
     float score[MAX_COURSENUM];
 } Student;
 
-Student students[MAX_STUNUM];    //¶¨ÒåÑ§Éú½á¹¹ÌåÊı×é
+Student students[MAX_STUNUM];    //å®šä¹‰å­¦ç”Ÿç»“æ„ä½“æ•°ç»„
 
 struct button {
 	int x,y;
@@ -29,7 +29,7 @@ struct button {
     char* pText;
 }; 
 
-//³õÊ¼»¯°´Å¥µÄÊôĞÔº¯Êı
+//åˆå§‹åŒ–æŒ‰é’®çš„å±æ€§å‡½æ•°
 struct button* createbutton(int x, int y, int width, int height, COLORREF color, const char* pText) {
 	struct button* pB = (struct button*)malloc(sizeof(struct button));
     if (pB) {                           
@@ -52,26 +52,26 @@ struct button* createbutton(int x, int y, int width, int height, COLORREF color,
 		return NULL;
 	}
 }
-//»æÖÆ°´Å¥º¯Êı
+//ç»˜åˆ¶æŒ‰é’®å‡½æ•°
 void drawbutton(struct button* pB) {
-	setfillcolor(pB->color);                //ÉèÖÃ°´Å¥ÑÕÉ«
-    settextstyle(20, 0, "¿¬Ìå");          //ÉèÖÃ×ÖÌå´óĞ¡
-    setlinecolor(BLACK);        //ÉèÖÃ±ß¿òÑÕÉ«
-    settextcolor(BLACK);		//ÉèÖÃ×ÖÌåÑÕÉ«
-    setbkmode(TRANSPARENT);                 //ÉèÖÃ±³¾°Í¸Ã÷
-	fillrectangle(pB->x, pB->y, pB->x + pB->width, pB->y + pB->height);  //»æÖÆ°´Å¥    
-	outtextxy(pB->x + 10, pB->y + 10, pB->pText);  //Êä³ö°´Å¥ÎÄ×Ö
+	setfillcolor(pB->color);                //è®¾ç½®æŒ‰é’®é¢œè‰²
+    settextstyle(20, 0, "æ¥·ä½“");          //è®¾ç½®å­—ä½“å¤§å°
+    setlinecolor(BLACK);        //è®¾ç½®è¾¹æ¡†é¢œè‰²
+    settextcolor(BLACK);		//è®¾ç½®å­—ä½“é¢œè‰²
+    setbkmode(TRANSPARENT);                 //è®¾ç½®èƒŒæ™¯é€æ˜
+	fillrectangle(pB->x, pB->y, pB->x + pB->width, pB->y + pB->height);  //ç»˜åˆ¶æŒ‰é’®    
+	outtextxy(pB->x + 10, pB->y + 10, pB->pText);  //è¾“å‡ºæŒ‰é’®æ–‡å­—
 }
-//ÅĞ¶ÏÊó±êÊÇ·ñÔÚ°´Å¥ÉÏ
+//åˆ¤æ–­é¼ æ ‡æ˜¯å¦åœ¨æŒ‰é’®ä¸Š
 int IsInButton(struct button* pB, MOUSEMSG m) {
     if (pB->x <= m.x && m.x <= pB->x + pB->width && pB->y <=m.y && m.y <= pB->height + pB->y) {
-        pB->color = RED;  //Êó±êÔÚ°´Å¥ÉÏÊ±°´Å¥ÑÕÉ«±äºì
+        pB->color = RED;  //é¼ æ ‡åœ¨æŒ‰é’®ä¸Šæ—¶æŒ‰é’®é¢œè‰²å˜çº¢
 		return 1;
 	}
     pB->color = YELLOW;  
 	return 0;
 }
-//ÅĞ¶ÏÊó±ê°´ÏÂ
+//åˆ¤æ–­é¼ æ ‡æŒ‰ä¸‹
 int clickbutton(struct button* pB, MOUSEMSG m) {
     if (IsInButton(pB, m) && m.uMsg == WM_LBUTTONDOWN) {
 		return 1;
@@ -80,20 +80,20 @@ int clickbutton(struct button* pB, MOUSEMSG m) {
 }
 
 
-int REAL_STUNUM = 0;              //Êµ¼ÊÑ§ÉúÈËÊı
-int REAL_COURSENUM = 0;           //Êµ¼Ê¿ÆÄ¿ÃÅÊı
-int match_id = -1;                 //²éÑ¯Ñ§ÉúµÄË÷ÒıºÅ
-int match_name = -1;               //²éÑ¯Ñ§ÉúµÄË÷ÒıºÅ
+int REAL_STUNUM = 0;              //å®é™…å­¦ç”Ÿäººæ•°
+int REAL_COURSENUM = 0;           //å®é™…ç§‘ç›®é—¨æ•°
+int match_id = -1;                 //æŸ¥è¯¢å­¦ç”Ÿçš„ç´¢å¼•å·
+int match_name = -1;               //æŸ¥è¯¢å­¦ç”Ÿçš„ç´¢å¼•å·
 
-float stu_sumscore[MAX_STUNUM];     //Ã¿¸öÑ§ÉúµÄ×Ü·Ö, ÔÚinputÖĞÏÈ¼ÆËãºÃ ±ÜÃâ²éÑ¯ÅÅÃû¸´ÔÓ
-float stu_averscore[MAX_STUNUM];     //Ã¿¸öÑ§ÉúµÄÆ½¾ù·Ö
+float stu_sumscore[MAX_STUNUM];     //æ¯ä¸ªå­¦ç”Ÿçš„æ€»åˆ†, åœ¨inputä¸­å…ˆè®¡ç®—å¥½ é¿å…æŸ¥è¯¢æ’åå¤æ‚
+float stu_averscore[MAX_STUNUM];     //æ¯ä¸ªå­¦ç”Ÿçš„å¹³å‡åˆ†
 
 float sum_score[MAX_COURSENUM];
 float aver_score[MAX_COURSENUM];
 
 float A_PER[MAX_COURSENUM] = { 0 }, B_PER[MAX_COURSENUM] = { 0 }, C_PER[MAX_COURSENUM] = { 0 };
 float D_PER[MAX_COURSENUM] = { 0 }, E_PER[MAX_COURSENUM] = { 0 };
-//ÉùÃ÷º¯Êı
+//å£°æ˜å‡½æ•°
 void Input_record();
 void Cal_total_aver_score();
 void Cal_total_aver_score_ofstudent();
@@ -121,27 +121,27 @@ void c12_display();
 void c13_display();
 
 int Ascending(float a, float b) {
-    return a > b;                   //¶ÔÓÚÉıĞò ³öÏÖa>b´íĞò Ôò½»»»
+    return a > b;                   //å¯¹äºå‡åº å‡ºç°a>bé”™åº åˆ™äº¤æ¢
 }
 int Descending(float a, float b) {
-    return a < b;                   //¶ÔÓÚ½µĞò ³öÏÖa<b´íĞò Ôò½»»»
+    return a < b;                   //å¯¹äºé™åº å‡ºç°a<bé”™åº åˆ™äº¤æ¢
 }
 
-void swap(float* a, float* b) {  //ÓÃÖ¸Õë½»»»Êı×éÖĞµÄÔªËØ
+void swap(float* a, float* b) {  //ç”¨æŒ‡é’ˆäº¤æ¢æ•°ç»„ä¸­çš„å…ƒç´ 
     float temp;
     temp = *a;
     *a = *b;
     *b = temp;
 }
 
-void swap_id(long* a, long* b) {  //ÓÃÖ¸Õë½»»»idÊı×éÖĞµÄÔªËØ
+void swap_id(long* a, long* b) {  //ç”¨æŒ‡é’ˆäº¤æ¢idæ•°ç»„ä¸­çš„å…ƒç´ 
     long temp;
     temp = *a;
     *a = *b;
     *b = temp;
 }
 
-void choice(int num) {       //¸ù¾İÓÃ»§ÊäÈëÑ¡ÏîSwitch²»Í¬º¯Êı
+void choice(int num) {       //æ ¹æ®ç”¨æˆ·è¾“å…¥é€‰é¡¹Switchä¸åŒå‡½æ•°
     switch (num) {
     case 1:
         c1_display();
@@ -195,11 +195,11 @@ void Input_record() {
     printf("How many courses?(number<=6)\n");
     scanf("%d", &REAL_COURSENUM);
     if (REAL_STUNUM > MAX_STUNUM) {
-        printf("ÊäÈëÈËÊı³¬¹ı30! ³ÌĞòÖĞÖ¹");
+        printf("è¾“å…¥äººæ•°è¶…è¿‡30! ç¨‹åºä¸­æ­¢");
         exit(1);
     }
     if (REAL_COURSENUM > MAX_COURSENUM) {
-        printf("ÊäÈë¿ÆÄ¿Êı³¬¹ı6! ³ÌĞòÖĞÖ¹");
+        printf("è¾“å…¥ç§‘ç›®æ•°è¶…è¿‡6! ç¨‹åºä¸­æ­¢");
         exit(1);
     }
     for (i = 0; i < REAL_STUNUM; i++) {
@@ -216,27 +216,27 @@ void Input_record() {
 
 // void Input_record(){
 //     printf("Please enter the student's information in the following format:\n");
-//     printf("ID Name Score1 Score2 ... ScoreN(Ã¿¸öÊı¾İÖĞ¼ä´©²åÒ»¸ö¿Õ¸ñ)\n");
+//     printf("ID Name Score1 Score2 ... ScoreN(æ¯ä¸ªæ•°æ®ä¸­é—´ç©¿æ’ä¸€ä¸ªç©ºæ ¼)\n");
 //     int i = 0;
 //     char input[256];
-//     if(fgets(input, sizeof(input), stdin) != NULL){  // Èç¹ûÃ»ÓĞ¶ÁÈ¡µ½EOF
-//         sscanf(input, "%ld %s", &students[REAL_STUNUM].id, students[REAL_STUNUM].name);  // ¶ÁÈ¡Ñ§ÉúµÄIDºÍĞÕÃû
-//         char *p = strchr(input, ' ');  // ÕÒµ½µÚÒ»¸ö¿Õ¸ñ
-//         if(p != NULL){  // Èç¹ûÕÒµ½ÁËµÚÒ»¸ö¿Õ¸ñ
-//             p = strchr(p + 1, ' ');  // ÕÒµ½µÚ¶ş¸ö¿Õ¸ñ
-//             if(p != NULL){  // Èç¹ûÕÒµ½ÁËµÚ¶ş¸ö¿Õ¸ñ
-//                 for(i = 0; i < REAL_COURSENUM; i++){  // ¶ÁÈ¡Ñ§ÉúµÄÃ¿ÃÅ¿Î³ÌµÄ³É¼¨
-//                     p = strchr(p + 1, ' ');  // ÕÒµ½ÏÂÒ»¸ö¿Õ¸ñ
-//                     if(p == NULL){  // Èç¹ûÃ»ÓĞÕÒµ½ÏÂÒ»¸ö¿Õ¸ñ
+//     if(fgets(input, sizeof(input), stdin) != NULL){  // å¦‚æœæ²¡æœ‰è¯»å–åˆ°EOF
+//         sscanf(input, "%ld %s", &students[REAL_STUNUM].id, students[REAL_STUNUM].name);  // è¯»å–å­¦ç”Ÿçš„IDå’Œå§“å
+//         char *p = strchr(input, ' ');  // æ‰¾åˆ°ç¬¬ä¸€ä¸ªç©ºæ ¼
+//         if(p != NULL){  // å¦‚æœæ‰¾åˆ°äº†ç¬¬ä¸€ä¸ªç©ºæ ¼
+//             p = strchr(p + 1, ' ');  // æ‰¾åˆ°ç¬¬äºŒä¸ªç©ºæ ¼
+//             if(p != NULL){  // å¦‚æœæ‰¾åˆ°äº†ç¬¬äºŒä¸ªç©ºæ ¼
+//                 for(i = 0; i < REAL_COURSENUM; i++){  // è¯»å–å­¦ç”Ÿçš„æ¯é—¨è¯¾ç¨‹çš„æˆç»©
+//                     p = strchr(p + 1, ' ');  // æ‰¾åˆ°ä¸‹ä¸€ä¸ªç©ºæ ¼
+//                     if(p == NULL){  // å¦‚æœæ²¡æœ‰æ‰¾åˆ°ä¸‹ä¸€ä¸ªç©ºæ ¼
 //                         break;
 //                     }
-//                     sscanf(p, "%f", &students[REAL_STUNUM].score[i]);  // ¶ÁÈ¡³É¼¨
+//                     sscanf(p, "%f", &students[REAL_STUNUM].score[i]);  // è¯»å–æˆç»©
 //                 }
 //             }
 //         }
 //     }
 
-//     // ¼ÆËãÑ§ÉúµÄ×Ü·Ö
+//     // è®¡ç®—å­¦ç”Ÿçš„æ€»åˆ†
 //     stu_sumscore[REAL_STUNUM] = 0;
 //     for(i = 0; i < REAL_COURSENUM; i++){
 //         stu_sumscore[REAL_STUNUM] += students[REAL_STUNUM].score[i];
@@ -250,34 +250,34 @@ void Cal_total_aver_score() {
     int flag = 1;
     printf("\nCalculate total and average score of course:\n");
     for (j = 0; j < REAL_COURSENUM; j++) {
-        sum_score[j] = 0;                                //×Ü·Ö³õÊ¼»¯
+        sum_score[j] = 0;                                //æ€»åˆ†åˆå§‹åŒ–
         for (i = 0; i < REAL_STUNUM; i++) {
-            sum_score[j] += students[i].score[j];                          //Ã¿ÃÅ¿Î³ÌµÄ×Ü·Ö
+            sum_score[j] += students[i].score[j];                          //æ¯é—¨è¯¾ç¨‹çš„æ€»åˆ†
         }
     }
     for (k = 0; k < REAL_COURSENUM; k++) {
         if (sum_score[k] == 0) {
             do {
-                printf("ËÆºõ³É¼¨ÓĞÎó, ÊÇ·ñ¼ÌĞø¼ÆËã? ÊäÈë1:¼ÌĞø, 0:½áÊø\n");
+                printf("ä¼¼ä¹æˆç»©æœ‰è¯¯, æ˜¯å¦ç»§ç»­è®¡ç®—? è¾“å…¥1:ç»§ç»­, 0:ç»“æŸ\n");
                 scanf("%d", &flag);
                 if (flag == 0) {
                     exit(0);
                 }
             } while (flag != 1 && flag != 0);
         }
-        aver_score[k] = sum_score[k] / REAL_STUNUM;               //Ã¿ÃÅ¿Î³ÌµÄÆ½¾ù·Ö
+        aver_score[k] = sum_score[k] / REAL_STUNUM;               //æ¯é—¨è¯¾ç¨‹çš„å¹³å‡åˆ†
     }
 
-    printf("%-10s%-10s\n", "Total", "Average");  // Êä³ö×Ü·ÖºÍÆ½¾ù·ÖµÄ±êÌâ£¬Ã¿¸ö±êÌâÕ¼10¸ö×Ö·û¿í¶È
+    printf("%-10s%-10s\n", "Total", "Average");  // è¾“å‡ºæ€»åˆ†å’Œå¹³å‡åˆ†çš„æ ‡é¢˜ï¼Œæ¯ä¸ªæ ‡é¢˜å 10ä¸ªå­—ç¬¦å®½åº¦
 
-    // Êä³ö·Ö¸ôÏß
+    // è¾“å‡ºåˆ†éš”çº¿
     for (i = 0; i < 30; i++) {
         printf("-");
     }
     printf("\n");
 
     for (i = 0; i < REAL_COURSENUM; i++) {
-        printf("%-10.2f%-10.2f\n", sum_score[i], aver_score[i]);  // Êä³öÃ¿ÃÅ¿Î³ÌµÄ×Ü·ÖºÍÆ½¾ù·Ö£¬Ã¿¸öÕ¼10¸ö×Ö·û¿í¶È£¬±£Áô2Î»Ğ¡Êı
+        printf("%-10.2f%-10.2f\n", sum_score[i], aver_score[i]);  // è¾“å‡ºæ¯é—¨è¯¾ç¨‹çš„æ€»åˆ†å’Œå¹³å‡åˆ†ï¼Œæ¯ä¸ªå 10ä¸ªå­—ç¬¦å®½åº¦ï¼Œä¿ç•™2ä½å°æ•°
 
     }
 }
@@ -287,22 +287,22 @@ void Cal_total_aver_score_ofstudent() {
     for (i = 0; i < REAL_STUNUM; i++) {
         stu_sumscore[i] = 0;
         for (j = 0; j < REAL_COURSENUM; j++) {
-            stu_sumscore[i] += students[i].score[j];  // ¼ÆËãÃ¿¸öÑ§ÉúµÄ×Ü·Ö
+            stu_sumscore[i] += students[i].score[j];  // è®¡ç®—æ¯ä¸ªå­¦ç”Ÿçš„æ€»åˆ†
         }
-        stu_averscore[i] = stu_sumscore[i] / REAL_COURSENUM;  // ¼ÆËãÃ¿¸öÑ§ÉúµÄÆ½¾ù·Ö    
+        stu_averscore[i] = stu_sumscore[i] / REAL_COURSENUM;  // è®¡ç®—æ¯ä¸ªå­¦ç”Ÿçš„å¹³å‡åˆ†    
     }
 
-    printf("%-10s%-20s%-10s%-10s\n", "Id", "Name", "Total", "Average");  // Êä³ö×Ü·ÖºÍÆ½¾ù·ÖµÄ±êÌâ£¬Ã¿¸ö±êÌâÕ¼10¸ö×Ö·û¿í¶È
+    printf("%-10s%-20s%-10s%-10s\n", "Id", "Name", "Total", "Average");  // è¾“å‡ºæ€»åˆ†å’Œå¹³å‡åˆ†çš„æ ‡é¢˜ï¼Œæ¯ä¸ªæ ‡é¢˜å 10ä¸ªå­—ç¬¦å®½åº¦
 
-    // Êä³ö·Ö¸ôÏß
+    // è¾“å‡ºåˆ†éš”çº¿
     for (i = 0; i < 30; i++) {
         printf("-");
     }
     printf("\n");
 
     for (i = 0; i < REAL_STUNUM; i++) {
-        printf("%-10ld%-20s", students[i].id, students[i].name);  // Êä³öÑ§ÉúµÄIDºÍĞÕÃû£¬Ã¿¸öÕ¼10¸ö×Ö·û¿í¶È
-        printf("%-10.2f%-10.2f", stu_sumscore[i], stu_averscore[i]);  // Êä³öÃ¿studentµÄ×Ü·ÖºÍÆ½¾ù·Ö£¬Ã¿¸öÕ¼10¸ö×Ö·û¿í¶È£¬±£Áô2Î»Ğ¡Êı
+        printf("%-10ld%-20s", students[i].id, students[i].name);  // è¾“å‡ºå­¦ç”Ÿçš„IDå’Œå§“åï¼Œæ¯ä¸ªå 10ä¸ªå­—ç¬¦å®½åº¦
+        printf("%-10.2f%-10.2f", stu_sumscore[i], stu_averscore[i]);  // è¾“å‡ºæ¯studentçš„æ€»åˆ†å’Œå¹³å‡åˆ†ï¼Œæ¯ä¸ªå 10ä¸ªå­—ç¬¦å®½åº¦ï¼Œä¿ç•™2ä½å°æ•°
         printf("\n");
     }
 }
@@ -312,7 +312,7 @@ void Sort_order_score(int (*compare)(float a, float b)) {
     int i, j;
     for (i = 0; i < REAL_STUNUM - 1; i++) {
         for (j = 0; j < REAL_STUNUM - 1 - i; j++) {
-            if ((*compare)(stu_sumscore[j], stu_sumscore[j + 1])) {  // Èç¹ûÇ°Ò»¸öÑ§ÉúµÄ×Ü·ÖĞ¡ÓÚºóÒ»¸öÑ§ÉúµÄ×Ü·Ö£¬Ôò½»»»ËûÃÇµÄÎ»ÖÃ
+            if ((*compare)(stu_sumscore[j], stu_sumscore[j + 1])) {  // å¦‚æœå‰ä¸€ä¸ªå­¦ç”Ÿçš„æ€»åˆ†å°äºåä¸€ä¸ªå­¦ç”Ÿçš„æ€»åˆ†ï¼Œåˆ™äº¤æ¢ä»–ä»¬çš„ä½ç½®
                 long temp_id = students[j].id;
                 char temp_name[20];
                 strcpy(temp_name, students[j].name);
@@ -333,26 +333,26 @@ void Sort_order_score(int (*compare)(float a, float b)) {
         }
     }
 
-    // Êä³öÅÅĞòºóµÄÑ§ÉúĞÅÏ¢
+    // è¾“å‡ºæ’åºåçš„å­¦ç”Ÿä¿¡æ¯
     printf("\nSort and Order by Score:\n");
-    printf("%-10s%-20s", "ID", "Name");  // Êä³öIDºÍĞÕÃûµÄ±êÌâ£¬Ã¿¸ö±êÌâÕ¼10¸ö×Ö·û¿í¶È
+    printf("%-10s%-20s", "ID", "Name");  // è¾“å‡ºIDå’Œå§“åçš„æ ‡é¢˜ï¼Œæ¯ä¸ªæ ‡é¢˜å 10ä¸ªå­—ç¬¦å®½åº¦
     for (j = 0; j < REAL_COURSENUM; j++) {
-        printf("%-10s", "Score");  // Êä³öÃ¿ÃÅ¿Î³ÌµÄ³É¼¨µÄ±êÌâ£¬Ã¿¸ö±êÌâÕ¼10¸ö×Ö·û¿í¶È
+        printf("%-10s", "Score");  // è¾“å‡ºæ¯é—¨è¯¾ç¨‹çš„æˆç»©çš„æ ‡é¢˜ï¼Œæ¯ä¸ªæ ‡é¢˜å 10ä¸ªå­—ç¬¦å®½åº¦
     }
-    printf("%-10s\n", "Sum");  // Êä³ö×Ü·ÖµÄ±êÌâ£¬Õ¼10¸ö×Ö·û¿í¶È
+    printf("%-10s\n", "Sum");  // è¾“å‡ºæ€»åˆ†çš„æ ‡é¢˜ï¼Œå 10ä¸ªå­—ç¬¦å®½åº¦
 
-    // Êä³ö·Ö¸ôÏß
+    // è¾“å‡ºåˆ†éš”çº¿
     for (i = 0; i < 10 * (REAL_COURSENUM + 3); i++) {
         printf("-");
     }
     printf("\n");
 
     for (i = 0; i < REAL_STUNUM; i++) {
-        printf("%-10ld%-20s", students[i].id, students[i].name);  // Êä³öÑ§ÉúµÄIDºÍĞÕÃû£¬Ã¿¸öÕ¼10¸ö×Ö·û¿í¶È
+        printf("%-10ld%-20s", students[i].id, students[i].name);  // è¾“å‡ºå­¦ç”Ÿçš„IDå’Œå§“åï¼Œæ¯ä¸ªå 10ä¸ªå­—ç¬¦å®½åº¦
         for (j = 0; j < REAL_COURSENUM; j++) {
-            printf("%-10.2f", students[i].score[j]);  // Êä³öÑ§ÉúµÄÃ¿ÃÅ¿Î³ÌµÄ³É¼¨£¬Ã¿¸ö³É¼¨Õ¼10¸ö×Ö·û¿í¶È£¬±£Áô2Î»Ğ¡Êı
+            printf("%-10.2f", students[i].score[j]);  // è¾“å‡ºå­¦ç”Ÿçš„æ¯é—¨è¯¾ç¨‹çš„æˆç»©ï¼Œæ¯ä¸ªæˆç»©å 10ä¸ªå­—ç¬¦å®½åº¦ï¼Œä¿ç•™2ä½å°æ•°
         }
-        printf("%-10.2f\n", stu_sumscore[i]);  // Êä³öÑ§ÉúµÄ×Ü·Ö£¬Õ¼10¸ö×Ö·û¿í¶È£¬±£Áô2Î»Ğ¡Êı
+        printf("%-10.2f\n", stu_sumscore[i]);  // è¾“å‡ºå­¦ç”Ÿçš„æ€»åˆ†ï¼Œå 10ä¸ªå­—ç¬¦å®½åº¦ï¼Œä¿ç•™2ä½å°æ•°
     }
 }
 
@@ -360,7 +360,7 @@ void Sort_order_id(int (*compare)(float a, float b)) {
     int i, j;
     for (i = 0; i < REAL_STUNUM - 1; i++) {
         for (j = 0; j < REAL_STUNUM - 1 - i; j++) {
-            if (students[j].id > students[j + 1].id) {  // Èç¹ûÇ°Ò»¸öÑ§ÉúµÄID´óÓÚºóÒ»¸öÑ§ÉúµÄID£¬Ôò½»»»ËûÃÇµÄÎ»ÖÃ
+            if (students[j].id > students[j + 1].id) {  // å¦‚æœå‰ä¸€ä¸ªå­¦ç”Ÿçš„IDå¤§äºåä¸€ä¸ªå­¦ç”Ÿçš„IDï¼Œåˆ™äº¤æ¢ä»–ä»¬çš„ä½ç½®
                 long temp_id = students[j].id;
                 char temp_name[20];
                 strcpy(temp_name, students[j].name);
@@ -381,26 +381,26 @@ void Sort_order_id(int (*compare)(float a, float b)) {
         }
     }
 
-    // Êä³öÅÅĞòºóµÄÑ§ÉúĞÅÏ¢
+    // è¾“å‡ºæ’åºåçš„å­¦ç”Ÿä¿¡æ¯
     printf("\nSort and Order by ID:\n");
-    printf("%-10s%-20s", "ID", "Name");  // Êä³öIDºÍĞÕÃûµÄ±êÌâ£¬Ã¿¸ö±êÌâÕ¼10¸ö×Ö·û¿í¶È
+    printf("%-10s%-20s", "ID", "Name");  // è¾“å‡ºIDå’Œå§“åçš„æ ‡é¢˜ï¼Œæ¯ä¸ªæ ‡é¢˜å 10ä¸ªå­—ç¬¦å®½åº¦
     for (j = 0; j < REAL_COURSENUM; j++) {
-        printf("%-10s", "Score");  // Êä³öÃ¿ÃÅ¿Î³ÌµÄ³É¼¨µÄ±êÌâ£¬Ã¿¸ö±êÌâÕ¼10¸ö×Ö·û¿í¶È
+        printf("%-10s", "Score");  // è¾“å‡ºæ¯é—¨è¯¾ç¨‹çš„æˆç»©çš„æ ‡é¢˜ï¼Œæ¯ä¸ªæ ‡é¢˜å 10ä¸ªå­—ç¬¦å®½åº¦
     }
-    printf("%-10s\n", "Sum");  // Êä³ö×Ü·ÖµÄ±êÌâ£¬Õ¼10¸ö×Ö·û¿í¶È
+    printf("%-10s\n", "Sum");  // è¾“å‡ºæ€»åˆ†çš„æ ‡é¢˜ï¼Œå 10ä¸ªå­—ç¬¦å®½åº¦
 
-    // Êä³ö·Ö¸ôÏß
+    // è¾“å‡ºåˆ†éš”çº¿
     for (i = 0; i < 10 * (REAL_COURSENUM + 3); i++) {
         printf("-");
     }
     printf("\n");
 
     for (i = 0; i < REAL_STUNUM; i++) {
-        printf("%-10ld%-20s", students[i].id, students[i].name);  // Êä³öÑ§ÉúµÄIDºÍĞÕÃû£¬Ã¿¸öÕ¼10¸ö×Ö·û¿í¶È
+        printf("%-10ld%-20s", students[i].id, students[i].name);  // è¾“å‡ºå­¦ç”Ÿçš„IDå’Œå§“åï¼Œæ¯ä¸ªå 10ä¸ªå­—ç¬¦å®½åº¦
         for (j = 0; j < REAL_COURSENUM; j++) {
-            printf("%-10.2f", students[i].score[j]);  // Êä³öÑ§ÉúµÄÃ¿ÃÅ¿Î³ÌµÄ³É¼¨£¬Ã¿¸ö³É¼¨Õ¼10¸ö×Ö·û¿í¶È£¬±£Áô2Î»Ğ¡Êı
+            printf("%-10.2f", students[i].score[j]);  // è¾“å‡ºå­¦ç”Ÿçš„æ¯é—¨è¯¾ç¨‹çš„æˆç»©ï¼Œæ¯ä¸ªæˆç»©å 10ä¸ªå­—ç¬¦å®½åº¦ï¼Œä¿ç•™2ä½å°æ•°
         }
-        printf("%-10.2f\n", stu_sumscore[i]);  // Êä³öÑ§ÉúµÄ×Ü·Ö£¬Õ¼10¸ö×Ö·û¿í¶È£¬±£Áô2Î»Ğ¡Êı
+        printf("%-10.2f\n", stu_sumscore[i]);  // è¾“å‡ºå­¦ç”Ÿçš„æ€»åˆ†ï¼Œå 10ä¸ªå­—ç¬¦å®½åº¦ï¼Œä¿ç•™2ä½å°æ•°
     }
 }
 
@@ -408,12 +408,12 @@ void Sort_in_dictionary_order_by_name() {
     int i, j;
     for (i = 0; i < REAL_STUNUM - 1; i++) {
         for (j = 0; j < REAL_STUNUM - 1 - i; j++) {
-            if (strcmp(students[j].name, students[j + 1].name) > 0) {  // Èç¹ûÇ°Ò»¸öÑ§ÉúµÄĞÕÃû´óÓÚºóÒ»¸öÑ§ÉúµÄĞÕÃû£¬Ôò½»»»ËûÃÇµÄÎ»ÖÃ
-                long temp_id = students[j].id;                        //ÏÂÎÄÏàµ±ÓÚ´óĞÍswap¶Ôid¡¢name¡¢score¡¢sumscore½øĞĞ½»»»
+            if (strcmp(students[j].name, students[j + 1].name) > 0) {  // å¦‚æœå‰ä¸€ä¸ªå­¦ç”Ÿçš„å§“åå¤§äºåä¸€ä¸ªå­¦ç”Ÿçš„å§“åï¼Œåˆ™äº¤æ¢ä»–ä»¬çš„ä½ç½®
+                long temp_id = students[j].id;                        //ä¸‹æ–‡ç›¸å½“äºå¤§å‹swapå¯¹idã€nameã€scoreã€sumscoreè¿›è¡Œäº¤æ¢
                 char temp_name[20];
-                strcpy(temp_name, students[j].name);                // ½»»»Ñ§ÉúµÄĞÕÃû
+                strcpy(temp_name, students[j].name);                // äº¤æ¢å­¦ç”Ÿçš„å§“å
                 float temp_score[MAX_COURSENUM];
-                memcpy(temp_score, students[j].score, sizeof(float) * REAL_COURSENUM);  // ½»»»Ñ§ÉúµÄ³É¼¨
+                memcpy(temp_score, students[j].score, sizeof(float) * REAL_COURSENUM);  // äº¤æ¢å­¦ç”Ÿçš„æˆç»©
                 float temp_sumscore = stu_sumscore[j];
 
                 students[j].id = students[j + 1].id;
@@ -428,57 +428,57 @@ void Sort_in_dictionary_order_by_name() {
             }
         }
     }
-    // Êä³öÅÅĞòºóµÄÑ§ÉúĞÅÏ¢
+    // è¾“å‡ºæ’åºåçš„å­¦ç”Ÿä¿¡æ¯
     printf("\nSort in dictionary order by name:\n");
-    printf("%-10s%-20s", "ID", "Name");  // Êä³öIDºÍĞÕÃûµÄ±êÌâ£¬Ã¿¸ö±êÌâÕ¼10¸ö×Ö·û¿í¶È
+    printf("%-10s%-20s", "ID", "Name");  // è¾“å‡ºIDå’Œå§“åçš„æ ‡é¢˜ï¼Œæ¯ä¸ªæ ‡é¢˜å 10ä¸ªå­—ç¬¦å®½åº¦
     for (j = 0; j < REAL_COURSENUM; j++) {
-        printf("%-10s", "Score");  // Êä³öÃ¿ÃÅ¿Î³ÌµÄ³É¼¨µÄ±êÌâ£¬Ã¿¸ö±êÌâÕ¼10¸ö×Ö·û¿í¶È
+        printf("%-10s", "Score");  // è¾“å‡ºæ¯é—¨è¯¾ç¨‹çš„æˆç»©çš„æ ‡é¢˜ï¼Œæ¯ä¸ªæ ‡é¢˜å 10ä¸ªå­—ç¬¦å®½åº¦
     }
-    printf("%-10s\n", "Sum");  // Êä³ö×Ü·ÖµÄ±êÌâ£¬Õ¼10¸ö×Ö·û¿í¶È
+    printf("%-10s\n", "Sum");  // è¾“å‡ºæ€»åˆ†çš„æ ‡é¢˜ï¼Œå 10ä¸ªå­—ç¬¦å®½åº¦
 
-    // Êä³ö·Ö¸ôÏß
+    // è¾“å‡ºåˆ†éš”çº¿
     for (i = 0; i < 10 * (REAL_COURSENUM + 3); i++) {
         printf("-");
     }
     printf("\n");
 
     for (i = 0; i < REAL_STUNUM; i++) {
-        printf("%-10ld%-20s", students[i].id, students[i].name);  // Êä³öÑ§ÉúµÄIDºÍĞÕÃû£¬Ã¿¸öÕ¼10¸ö×Ö·û¿í¶È
+        printf("%-10ld%-20s", students[i].id, students[i].name);  // è¾“å‡ºå­¦ç”Ÿçš„IDå’Œå§“åï¼Œæ¯ä¸ªå 10ä¸ªå­—ç¬¦å®½åº¦
         for (j = 0; j < REAL_COURSENUM; j++) {
-            printf("%-10.2f", students[i].score[j]);  // Êä³öÑ§ÉúµÄÃ¿ÃÅ¿Î³ÌµÄ³É¼¨£¬Ã¿¸ö³É¼¨Õ¼10¸ö×Ö·û¿í¶È£¬±£Áô2Î»Ğ¡Êı
+            printf("%-10.2f", students[i].score[j]);  // è¾“å‡ºå­¦ç”Ÿçš„æ¯é—¨è¯¾ç¨‹çš„æˆç»©ï¼Œæ¯ä¸ªæˆç»©å 10ä¸ªå­—ç¬¦å®½åº¦ï¼Œä¿ç•™2ä½å°æ•°
         }
-        printf("%-10.2f\n", stu_sumscore[i]);  // Êä³öÑ§ÉúµÄ×Ü·Ö£¬Õ¼10¸ö×Ö·û¿í¶È£¬±£Áô2Î»Ğ¡Êı
+        printf("%-10.2f\n", stu_sumscore[i]);  // è¾“å‡ºå­¦ç”Ÿçš„æ€»åˆ†ï¼Œå 10ä¸ªå­—ç¬¦å®½åº¦ï¼Œä¿ç•™2ä½å°æ•°
     }
 }
 
 void Search_by_number() {
-    long id;        //ÓÃÑ§ºÅ²éÑ¯³É¼¨ µÄ Ë÷ÒıÑ§ºÅ
+    long id;        //ç”¨å­¦å·æŸ¥è¯¢æˆç»© çš„ ç´¢å¼•å­¦å·
     printf("\nSearch by number:\n");
     int i, j;
     printf("Enter the id:\n");
     scanf("%d", &id);
-    match_id = -1;  // ³õÊ¼»¯Æ¥ÅäµÄÑ§ÉúIDµÄË÷ÒıºÅ
+    match_id = -1;  // åˆå§‹åŒ–åŒ¹é…çš„å­¦ç”ŸIDçš„ç´¢å¼•å·
     for (i = 0; i < REAL_STUNUM; i++) {
-        if (students[i].id == id) {  // Èç¹ûÕÒµ½ÁËÆ¥ÅäµÄÑ§ÉúID
+        if (students[i].id == id) {  // å¦‚æœæ‰¾åˆ°äº†åŒ¹é…çš„å­¦ç”ŸID
             match_id = i;
             printf("\nSearch Result:\n");
-            printf("%-10s%-20s", "ID", "Name");  // Êä³öIDºÍĞÕÃûµÄ±êÌâ£¬Ã¿¸ö±êÌâÕ¼10¸ö×Ö·û¿í¶È
+            printf("%-10s%-20s", "ID", "Name");  // è¾“å‡ºIDå’Œå§“åçš„æ ‡é¢˜ï¼Œæ¯ä¸ªæ ‡é¢˜å 10ä¸ªå­—ç¬¦å®½åº¦
             for (j = 0; j < REAL_COURSENUM; j++) {
-                printf("%-10s", "Score");  // Êä³öÃ¿ÃÅ¿Î³ÌµÄ³É¼¨µÄ±êÌâ£¬Ã¿¸ö±êÌâÕ¼10¸ö×Ö·û¿í¶È
+                printf("%-10s", "Score");  // è¾“å‡ºæ¯é—¨è¯¾ç¨‹çš„æˆç»©çš„æ ‡é¢˜ï¼Œæ¯ä¸ªæ ‡é¢˜å 10ä¸ªå­—ç¬¦å®½åº¦
             }
-            printf("%-10s\n", "Sum");  // Êä³ö×Ü·ÖµÄ±êÌâ£¬Õ¼10¸ö×Ö·û¿í¶È
+            printf("%-10s\n", "Sum");  // è¾“å‡ºæ€»åˆ†çš„æ ‡é¢˜ï¼Œå 10ä¸ªå­—ç¬¦å®½åº¦
 
-            // Êä³ö·Ö¸ôÏß
+            // è¾“å‡ºåˆ†éš”çº¿
             for (j = 0; j < 10 * (REAL_COURSENUM + 3); j++) {
                 printf("-");
             }
             printf("\n");
 
-            printf("%-10ld%-20s", students[i].id, students[i].name);  // Êä³öÑ§ÉúµÄIDºÍĞÕÃû£¬Ã¿¸öÕ¼10¸ö×Ö·û¿í¶È
+            printf("%-10ld%-20s", students[i].id, students[i].name);  // è¾“å‡ºå­¦ç”Ÿçš„IDå’Œå§“åï¼Œæ¯ä¸ªå 10ä¸ªå­—ç¬¦å®½åº¦
             for (j = 0; j < REAL_COURSENUM; j++) {
-                printf("%-10.2f", students[i].score[j]);  // Êä³öÑ§ÉúµÄÃ¿ÃÅ¿Î³ÌµÄ³É¼¨£¬Ã¿¸ö³É¼¨Õ¼10¸ö×Ö·û¿í¶È£¬±£Áô2Î»Ğ¡Êı
+                printf("%-10.2f", students[i].score[j]);  // è¾“å‡ºå­¦ç”Ÿçš„æ¯é—¨è¯¾ç¨‹çš„æˆç»©ï¼Œæ¯ä¸ªæˆç»©å 10ä¸ªå­—ç¬¦å®½åº¦ï¼Œä¿ç•™2ä½å°æ•°
             }
-            printf("%-10.2f\n", stu_sumscore[i]);  // Êä³öÑ§ÉúµÄ×Ü·Ö£¬Õ¼10¸ö×Ö·û¿í¶È£¬±£Áô2Î»Ğ¡Êı
+            printf("%-10.2f\n", stu_sumscore[i]);  // è¾“å‡ºå­¦ç”Ÿçš„æ€»åˆ†ï¼Œå 10ä¸ªå­—ç¬¦å®½åº¦ï¼Œä¿ç•™2ä½å°æ•°
             return;
         }
     }
@@ -487,34 +487,34 @@ void Search_by_number() {
 }
 
 void Search_by_name() {
-    char name[20];  //ÓÃĞÕÃû²éÑ¯³É¼¨ µÄ Ë÷ÒıĞÕÃû
+    char name[20];  //ç”¨å§“åæŸ¥è¯¢æˆç»© çš„ ç´¢å¼•å§“å
     printf("\nSearch by name:\n");
     int i, j;
     printf("Enter the name:\n");
     scanf("%s", name);
-    name[strlen(name)] = '\0';  // È·±£×Ö·û´®ÒÔ¿Õ×Ö·û½áÊø
-    match_name = -1;  // ³õÊ¼»¯Æ¥ÅäµÄÑ§ÉúĞÕÃûµÄË÷ÒıºÅ
+    name[strlen(name)] = '\0';  // ç¡®ä¿å­—ç¬¦ä¸²ä»¥ç©ºå­—ç¬¦ç»“æŸ
+    match_name = -1;  // åˆå§‹åŒ–åŒ¹é…çš„å­¦ç”Ÿå§“åçš„ç´¢å¼•å·
     for (i = 0; i < REAL_STUNUM; i++) {
-        if (strcmp(students[i].name, name) == 0) {  // Èç¹ûÕÒµ½ÁËÆ¥ÅäµÄÑ§ÉúĞÕÃû
+        if (strcmp(students[i].name, name) == 0) {  // å¦‚æœæ‰¾åˆ°äº†åŒ¹é…çš„å­¦ç”Ÿå§“å
             match_name = i;
             printf("\nSearch Result:\n");
-            printf("%-10s%-20s", "ID", "Name");  // Êä³öIDºÍĞÕÃûµÄ±êÌâ£¬Ã¿¸ö±êÌâÕ¼10¸ö×Ö·û¿í¶È
+            printf("%-10s%-20s", "ID", "Name");  // è¾“å‡ºIDå’Œå§“åçš„æ ‡é¢˜ï¼Œæ¯ä¸ªæ ‡é¢˜å 10ä¸ªå­—ç¬¦å®½åº¦
             for (j = 0; j < REAL_COURSENUM; j++) {
-                printf("%-10s", "Score");  // Êä³öÃ¿ÃÅ¿Î³ÌµÄ³É¼¨µÄ±êÌâ£¬Ã¿¸ö±êÌâÕ¼10¸ö×Ö·û¿í¶È
+                printf("%-10s", "Score");  // è¾“å‡ºæ¯é—¨è¯¾ç¨‹çš„æˆç»©çš„æ ‡é¢˜ï¼Œæ¯ä¸ªæ ‡é¢˜å 10ä¸ªå­—ç¬¦å®½åº¦
             }
-            printf("%-10s\n", "Sum");  // Êä³ö×Ü·ÖµÄ±êÌâ£¬Õ¼10¸ö×Ö·û¿í¶È
+            printf("%-10s\n", "Sum");  // è¾“å‡ºæ€»åˆ†çš„æ ‡é¢˜ï¼Œå 10ä¸ªå­—ç¬¦å®½åº¦
 
-            // Êä³ö·Ö¸ôÏß
+            // è¾“å‡ºåˆ†éš”çº¿
             for (j = 0; j < 10 * (REAL_COURSENUM + 3); j++) {
                 printf("-");
             }
             printf("\n");
 
-            printf("%-10ld%-20s", students[i].id, students[i].name);  // Êä³öÑ§ÉúµÄIDºÍĞÕÃû£¬Ã¿¸öÕ¼10¸ö×Ö·û¿í¶È
+            printf("%-10ld%-20s", students[i].id, students[i].name);  // è¾“å‡ºå­¦ç”Ÿçš„IDå’Œå§“åï¼Œæ¯ä¸ªå 10ä¸ªå­—ç¬¦å®½åº¦
             for (j = 0; j < REAL_COURSENUM; j++) {
-                printf("%-10.2f", students[i].score[j]);  // Êä³öÑ§ÉúµÄÃ¿ÃÅ¿Î³ÌµÄ³É¼¨£¬Ã¿¸ö³É¼¨Õ¼10¸ö×Ö·û¿í¶È£¬±£Áô2Î»Ğ¡Êı
+                printf("%-10.2f", students[i].score[j]);  // è¾“å‡ºå­¦ç”Ÿçš„æ¯é—¨è¯¾ç¨‹çš„æˆç»©ï¼Œæ¯ä¸ªæˆç»©å 10ä¸ªå­—ç¬¦å®½åº¦ï¼Œä¿ç•™2ä½å°æ•°
             }
-            printf("%-10.2f\n", stu_sumscore[i]);  // Êä³öÑ§ÉúµÄ×Ü·Ö£¬Õ¼10¸ö×Ö·û¿í¶È£¬±£Áô2Î»Ğ¡Êı
+            printf("%-10.2f\n", stu_sumscore[i]);  // è¾“å‡ºå­¦ç”Ÿçš„æ€»åˆ†ï¼Œå 10ä¸ªå­—ç¬¦å®½åº¦ï¼Œä¿ç•™2ä½å°æ•°
             return;
         }
     }
@@ -526,7 +526,7 @@ void Statistic_analysis() {
     int i, j;
     int A_COUNT[MAX_COURSENUM] = { 0 }, B_COUNT[MAX_COURSENUM] = { 0 }, C_COUNT[MAX_COURSENUM] = { 0 };
     int D_COUNT[MAX_COURSENUM] = { 0 }, E_COUNT[MAX_COURSENUM] = { 0 };
-    for (j = 0; j < REAL_COURSENUM; j++) {                 //±éÀú
+    for (j = 0; j < REAL_COURSENUM; j++) {                 //éå†
         for (i = 0; i < REAL_STUNUM; i++) {
             if (students[i].score[j] <= 100 && students[i].score[j] >= 90) {
                 A_COUNT[j]++;
@@ -544,17 +544,17 @@ void Statistic_analysis() {
                 E_COUNT[j]++;
             }
         }
-        A_PER[j] = (float)A_COUNT[j] / REAL_STUNUM;                 //±ÜÃâÕûĞÍ³ı·¨
+        A_PER[j] = (float)A_COUNT[j] / REAL_STUNUM;                 //é¿å…æ•´å‹é™¤æ³•
         B_PER[j] = (float)B_COUNT[j] / REAL_STUNUM;
         C_PER[j] = (float)C_COUNT[j] / REAL_STUNUM;
         D_PER[j] = (float)D_COUNT[j] / REAL_STUNUM;
         E_PER[j] = (float)E_COUNT[j] / REAL_STUNUM;
 
-        printf("course NUM.%d: ÓÅĞãÈËÊı£º%d, ËùÕ¼°Ù·Ö±È%.2f%%\n", j + 1, A_COUNT[j], A_PER[j] * 100);
-        printf("course NUM.%d: Á¼ºÃÈËÊı£º%d, ËùÕ¼°Ù·Ö±È%.2f%%\n", j + 1, B_COUNT[j], B_PER[j] * 100);
-        printf("course NUM.%d: ÖĞµÈÈËÊı£º%d, ËùÕ¼°Ù·Ö±È%.2f%%\n", j + 1, C_COUNT[j], C_PER[j] * 100);
-        printf("course NUM.%d: ¼°¸ñÈËÊı£º%d, ËùÕ¼°Ù·Ö±È%.2f%%\n", j + 1, D_COUNT[j], D_PER[j] * 100);
-        printf("course NUM.%d: ²»¼°¸ñÈËÊı£º%d, ËùÕ¼°Ù·Ö±È%.2f%%\n", j + 1, E_COUNT[j], E_PER[j] * 100);
+        printf("course NUM.%d: ä¼˜ç§€äººæ•°ï¼š%d, æ‰€å ç™¾åˆ†æ¯”%.2f%%\n", j + 1, A_COUNT[j], A_PER[j] * 100);
+        printf("course NUM.%d: è‰¯å¥½äººæ•°ï¼š%d, æ‰€å ç™¾åˆ†æ¯”%.2f%%\n", j + 1, B_COUNT[j], B_PER[j] * 100);
+        printf("course NUM.%d: ä¸­ç­‰äººæ•°ï¼š%d, æ‰€å ç™¾åˆ†æ¯”%.2f%%\n", j + 1, C_COUNT[j], C_PER[j] * 100);
+        printf("course NUM.%d: åŠæ ¼äººæ•°ï¼š%d, æ‰€å ç™¾åˆ†æ¯”%.2f%%\n", j + 1, D_COUNT[j], D_PER[j] * 100);
+        printf("course NUM.%d: ä¸åŠæ ¼äººæ•°ï¼š%d, æ‰€å ç™¾åˆ†æ¯”%.2f%%\n", j + 1, E_COUNT[j], E_PER[j] * 100);
     }
 }
 
@@ -562,119 +562,119 @@ void List_record() {
     printf("\nList record:\n");
     int i, j;
 
-    printf("%-10s%-20s", "ID", "Name");  // Êä³öIDºÍĞÕÃûµÄ±êÌâ£¬Ã¿¸ö±êÌâÕ¼10¸ö×Ö·û¿í¶È
+    printf("%-10s%-20s", "ID", "Name");  // è¾“å‡ºIDå’Œå§“åçš„æ ‡é¢˜ï¼Œæ¯ä¸ªæ ‡é¢˜å 10ä¸ªå­—ç¬¦å®½åº¦
     for (j = 0; j < REAL_COURSENUM; j++) {
-        printf("%-10s", "Score");  // Êä³öÃ¿ÃÅ¿Î³ÌµÄ³É¼¨µÄ±êÌâ£¬Ã¿¸ö±êÌâÕ¼10¸ö×Ö·û¿í¶È
+        printf("%-10s", "Score");  // è¾“å‡ºæ¯é—¨è¯¾ç¨‹çš„æˆç»©çš„æ ‡é¢˜ï¼Œæ¯ä¸ªæ ‡é¢˜å 10ä¸ªå­—ç¬¦å®½åº¦
     }
-    printf("%-10s", "Sum");  // Êä³ö×Ü·ÖµÄ±êÌâ£¬Õ¼10¸ö×Ö·û¿í¶È
-    printf("%-10s\n", "Aver");           //Êä³öÆ½¾ù·ÖµÄ±êÌâ£¬Õ¼10¸ö×Ö·û¿í¶È
-    // Êä³ö·Ö¸ôÏß
+    printf("%-10s", "Sum");  // è¾“å‡ºæ€»åˆ†çš„æ ‡é¢˜ï¼Œå 10ä¸ªå­—ç¬¦å®½åº¦
+    printf("%-10s\n", "Aver");           //è¾“å‡ºå¹³å‡åˆ†çš„æ ‡é¢˜ï¼Œå 10ä¸ªå­—ç¬¦å®½åº¦
+    // è¾“å‡ºåˆ†éš”çº¿
     for (i = 0; i < 10 * (REAL_COURSENUM + 3); i++) {
         printf("-");
     }
     printf("\n");
 
     for (i = 0; i < REAL_STUNUM; i++) {
-        printf("%-10ld%-20s", students[i].id, students[i].name);  // Êä³öÑ§ÉúµÄIDºÍĞÕÃû£¬Ã¿¸öÕ¼10¸ö×Ö·û¿í¶È
+        printf("%-10ld%-20s", students[i].id, students[i].name);  // è¾“å‡ºå­¦ç”Ÿçš„IDå’Œå§“åï¼Œæ¯ä¸ªå 10ä¸ªå­—ç¬¦å®½åº¦
         for (j = 0; j < REAL_COURSENUM; j++) {
-            printf("%-10.2f", students[i].score[j]);  // Êä³öÑ§ÉúµÄÃ¿ÃÅ¿Î³ÌµÄ³É¼¨£¬Ã¿¸ö³É¼¨Õ¼10¸ö×Ö·û¿í¶È£¬±£Áô2Î»Ğ¡Êı
+            printf("%-10.2f", students[i].score[j]);  // è¾“å‡ºå­¦ç”Ÿçš„æ¯é—¨è¯¾ç¨‹çš„æˆç»©ï¼Œæ¯ä¸ªæˆç»©å 10ä¸ªå­—ç¬¦å®½åº¦ï¼Œä¿ç•™2ä½å°æ•°
         }
-        printf("%-10.2f", stu_sumscore[i]);  // Êä³öÑ§ÉúµÄ×Ü·Ö£¬Õ¼10¸ö×Ö·û¿í¶È£¬±£Áô2Î»Ğ¡Êı
-        printf("%-10.2f\n", stu_averscore[i]);   // Êä³öÑ§ÉúµÄÆ½¾ù·Ö£¬Õ¼10¸ö×Ö·û¿í¶È£¬±£Áô2Î»Ğ¡Êı
+        printf("%-10.2f", stu_sumscore[i]);  // è¾“å‡ºå­¦ç”Ÿçš„æ€»åˆ†ï¼Œå 10ä¸ªå­—ç¬¦å®½åº¦ï¼Œä¿ç•™2ä½å°æ•°
+        printf("%-10.2f\n", stu_averscore[i]);   // è¾“å‡ºå­¦ç”Ÿçš„å¹³å‡åˆ†ï¼Œå 10ä¸ªå­—ç¬¦å®½åº¦ï¼Œä¿ç•™2ä½å°æ•°
     }
     printf("-------------------\n");
     printf("-------------------\n");
-    printf("%-10s%-10s\n", "Total", "Average");  // Êä³ö×Ü·ÖºÍÆ½¾ù·ÖµÄ±êÌâ£¬Ã¿¸ö±êÌâÕ¼10¸ö×Ö·û¿í¶È
+    printf("%-10s%-10s\n", "Total", "Average");  // è¾“å‡ºæ€»åˆ†å’Œå¹³å‡åˆ†çš„æ ‡é¢˜ï¼Œæ¯ä¸ªæ ‡é¢˜å 10ä¸ªå­—ç¬¦å®½åº¦
 
-    // Êä³ö·Ö¸ôÏß
+    // è¾“å‡ºåˆ†éš”çº¿
     for (i = 0; i < 30; i++) {
         printf("-");
     }
     printf("\n");
 
     for (i = 0; i < REAL_COURSENUM; i++) {
-        printf("%-10.2f%-10.2f\n", sum_score[i], aver_score[i]);  // Êä³öÃ¿ÃÅ¿Î³ÌµÄ×Ü·ÖºÍÆ½¾ù·Ö£¬Ã¿¸öÕ¼10¸ö×Ö·û¿í¶È£¬±£Áô2Î»Ğ¡Êı
+        printf("%-10.2f%-10.2f\n", sum_score[i], aver_score[i]);  // è¾“å‡ºæ¯é—¨è¯¾ç¨‹çš„æ€»åˆ†å’Œå¹³å‡åˆ†ï¼Œæ¯ä¸ªå 10ä¸ªå­—ç¬¦å®½åº¦ï¼Œä¿ç•™2ä½å°æ•°
 
     }
 }
 char lujin[128];
 void Write_to_a_file() {
-    printf("±£´æÂ·¾¶£º\n");
-    scanf("%s",lujin);                      //ÈÃÓÃ»§Ö¸¶¨´æ´¢Â·¾¶
+    printf("ä¿å­˜è·¯å¾„ï¼š\n");
+    scanf("%s",lujin);                      //è®©ç”¨æˆ·æŒ‡å®šå­˜å‚¨è·¯å¾„
     FILE* file = fopen(lujin, "w");
     if (file == NULL) {
-        printf("ÎŞ·¨´ò¿ªÎÄ¼ş\n");
+        printf("æ— æ³•æ‰“å¼€æ–‡ä»¶\n");
         return;
     }
-    fprintf(file, "Ñ§ÉúÊıÁ¿£º%d", REAL_STUNUM);
-    fprintf(file, "¿ÆÄ¿ÊıÁ¿£º%d\n", REAL_COURSENUM);
+    fprintf(file, "å­¦ç”Ÿæ•°é‡ï¼š%d", REAL_STUNUM);
+    fprintf(file, "ç§‘ç›®æ•°é‡ï¼š%d\n", REAL_COURSENUM);
     for (int i = 0; i < REAL_STUNUM; i++) {
-        fprintf(file, "ĞÕÃû: %s\n", students[i].name);
-        fprintf(file, "Ñ§ºÅ: %ld\n", students[i].id);
-        fprintf(file, "·ÖÊı: ");
+        fprintf(file, "å§“å: %s\n", students[i].name);
+        fprintf(file, "å­¦å·: %ld\n", students[i].id);
+        fprintf(file, "åˆ†æ•°: ");
         for (int j = 0; j < REAL_COURSENUM; j++) {
             fprintf(file, "%.2f ", students[i].score[j]);
         }
-        fprintf(file, "\n×Ü·Ö: %.2f\n", stu_sumscore[i]);
-        fprintf(file, "Æ½¾ù·Ö: %.2f\n\n", stu_averscore[i]);
-        fflush(file);  // Á¢¼´½«Êı¾İĞ´Èë´ÅÅÌ
+        fprintf(file, "\næ€»åˆ†: %.2f\n", stu_sumscore[i]);
+        fprintf(file, "å¹³å‡åˆ†: %.2f\n\n", stu_averscore[i]);
+        fflush(file);  // ç«‹å³å°†æ•°æ®å†™å…¥ç£ç›˜
     }
-    printf("Ğ´ÈëÎÄ¼ş³É¹¦\n");
+    printf("å†™å…¥æ–‡ä»¶æˆåŠŸ\n");
     fclose(file);
 }
 
 void Read_from_a_file() {
-    printf("¶ÁÈ¡Â·¾¶£º\n");
-    scanf("%s", lujin);                      //ÈÃÓÃ»§Ö¸¶¨Â·¾¶
+    printf("è¯»å–è·¯å¾„ï¼š\n");
+    scanf("%s", lujin);                      //è®©ç”¨æˆ·æŒ‡å®šè·¯å¾„
     FILE* file = fopen(lujin, "r");
     if (file == NULL) {
-        printf("ÎŞ·¨´ò¿ªÎÄ¼ş\n");
+        printf("æ— æ³•æ‰“å¼€æ–‡ä»¶\n");
         return;
     }
 
-    fscanf(file, "Ñ§ÉúÊıÁ¿£º%d", &REAL_STUNUM);
-    fscanf(file, "¿ÆÄ¿ÊıÁ¿£º%d\n", &REAL_COURSENUM);
+    fscanf(file, "å­¦ç”Ÿæ•°é‡ï¼š%d", &REAL_STUNUM);
+    fscanf(file, "ç§‘ç›®æ•°é‡ï¼š%d\n", &REAL_COURSENUM);
     for (int i = 0; i < REAL_STUNUM; i++) {
-		fscanf(file, "ĞÕÃû: %s\n", students[i].name);
-		fscanf(file, "Ñ§ºÅ: %ld\n", &students[i].id);
-		fscanf(file, "·ÖÊı: ");
+		fscanf(file, "å§“å: %s\n", students[i].name);
+		fscanf(file, "å­¦å·: %ld\n", &students[i].id);
+		fscanf(file, "åˆ†æ•°: ");
         for (int j = 0; j < REAL_COURSENUM; j++) {
 			fscanf(file, "%f", &students[i].score[j]);
 		}
-		fscanf(file, "\n×Ü·Ö: %f\n", &stu_sumscore[i]);
-		fscanf(file, "Æ½¾ù·Ö: %f\n\n", &stu_averscore[i]);
-		printf("ĞÕÃû: %s\n", students[i].name);
-		printf("Ñ§ºÅ: %ld\n", students[i].id);
-		printf("·ÖÊı: ");
+		fscanf(file, "\næ€»åˆ†: %f\n", &stu_sumscore[i]);
+		fscanf(file, "å¹³å‡åˆ†: %f\n\n", &stu_averscore[i]);
+		printf("å§“å: %s\n", students[i].name);
+		printf("å­¦å·: %ld\n", students[i].id);
+		printf("åˆ†æ•°: ");
         for (int j = 0; j < REAL_COURSENUM; j++) {
 			printf("%.2f ", students[i].score[j]);
 		}
-		printf("\n×Ü·Ö: %.2f\n", stu_sumscore[i]);
-		printf("Æ½¾ù·Ö: %.2f\n\n", stu_averscore[i]);
+		printf("\næ€»åˆ†: %.2f\n", stu_sumscore[i]);
+		printf("å¹³å‡åˆ†: %.2f\n\n", stu_averscore[i]);
 	}
 
-    printf("¶ÁÈ¡ÎÄ¼ş³É¹¦\n");
+    printf("è¯»å–æ–‡ä»¶æˆåŠŸ\n");
     fclose(file);
 }
 
-//ĞŞ¸ÄÑ§ÉúĞÅÏ¢*
+//ä¿®æ”¹å­¦ç”Ÿä¿¡æ¯*
 
-//ĞŞ¸Ä²¿·ÖÑ§ÉúĞÅÏ¢ Ç°Ìáº¯Êı
+//ä¿®æ”¹éƒ¨åˆ†å­¦ç”Ÿä¿¡æ¯ å‰æå‡½æ•°
 //void modi_infor() {
-//    printf("ÒÔÑ§ºÅ »¹ÊÇ ĞÕÃû ÎªÆ¾ĞŞ¸ÄÄ¿±êÑ§ÉúĞÅÏ¢£¿\nÊäÈë1:Ñ§ºÅ, 2:ĞÕÃû\n");
+//    printf("ä»¥å­¦å· è¿˜æ˜¯ å§“å ä¸ºå‡­ä¿®æ”¹ç›®æ ‡å­¦ç”Ÿä¿¡æ¯ï¼Ÿ\nè¾“å…¥1:å­¦å·, 2:å§“å\n");
 //    unsigned int choi=0;
 //    scanf("%d",&choi);
 //    if (choi == 1 || choi == 2) {
 //        if (choi == 1) {
 //            Search_by_number();
-//            printf("¸ÄµÚ¼¸¿Æ£¿\n");
+//            printf("æ”¹ç¬¬å‡ ç§‘ï¼Ÿ\n");
 //            int which_course = -1;
 //            scanf("%d",&which_course);
 //            if (which_course == -1) {
 //                printf("wrong which_course\n");
 //            }
 //            else {
-//                printf("ĞŞ¸ÄÎª£º\n"); 
+//                printf("ä¿®æ”¹ä¸ºï¼š\n"); 
 //                float after_modi_score = -1;
 //                scanf("%d", &which_course);
 //                if (which_course == -1) {
@@ -699,24 +699,24 @@ void menu_display() {
     IMAGE mm;
     loadimage(&mm, "background.png", 800, 600);
 
-    struct button* c1 = createbutton(100, 200, 200, 50, YELLOW, "Â¼ÈëĞÅÏ¢");
-    struct button* c2 = createbutton(100, 250, 200, 50, YELLOW, "Ëã¸÷¿Æ×Ü·Ö,¾ù·Ö");
-    struct button* c3 = createbutton(100, 300, 200, 50, YELLOW, "Ëã¸÷Ñ§Éú×Ü·Ö,¾ù·Ö");
-    struct button* c4 = createbutton(100, 350, 200, 50, YELLOW, "Ñ§Éú×Ü·Ö½µĞò");
-    struct button* c5 = createbutton(100, 400, 200, 50, YELLOW, "Ñ§Éú×Ü·ÖÉıĞò");
-    struct button* c6 = createbutton(100, 450, 200, 50, YELLOW, "Ñ§ºÅÉıĞò");
-    struct button* c7 = createbutton(100, 500, 200, 50, YELLOW, "Ê××ÖÄ¸Ë³Ğò");
-    struct button* c8 = createbutton(100, 550, 200, 50, YELLOW, "ÒÔÑ§ºÅ¼ìË÷");
-    struct button* c9 = createbutton(400, 200, 200, 50, YELLOW, "ÒÔĞÕÃû¼ìË÷");
-    struct button* c10 = createbutton(400, 250, 200, 50, YELLOW, "¸÷·ÖÊı¶Î·Ö²¼");
-    struct button* c11 = createbutton(400, 300, 200, 50, YELLOW, "ÁĞ³öĞÅÏ¢");
-    struct button* c12 = createbutton(400, 350, 200, 50, YELLOW, "Ğ´ÈëÎÄ¼ş");
-    struct button* c13 = createbutton(400, 400, 200, 50, YELLOW, "¶ÁÈ¡ÎÄ¼ş");
-    struct button* c0 = createbutton(400, 450, 200, 50, YELLOW, "ÍË³ö³ÌĞò");
+    struct button* c1 = createbutton(100, 200, 200, 50, YELLOW, "å½•å…¥ä¿¡æ¯");
+    struct button* c2 = createbutton(100, 250, 200, 50, YELLOW, "ç®—å„ç§‘æ€»åˆ†,å‡åˆ†");
+    struct button* c3 = createbutton(100, 300, 200, 50, YELLOW, "ç®—å„å­¦ç”Ÿæ€»åˆ†,å‡åˆ†");
+    struct button* c4 = createbutton(100, 350, 200, 50, YELLOW, "å­¦ç”Ÿæ€»åˆ†é™åº");
+    struct button* c5 = createbutton(100, 400, 200, 50, YELLOW, "å­¦ç”Ÿæ€»åˆ†å‡åº");
+    struct button* c6 = createbutton(100, 450, 200, 50, YELLOW, "å­¦å·å‡åº");
+    struct button* c7 = createbutton(100, 500, 200, 50, YELLOW, "é¦–å­—æ¯é¡ºåº");
+    struct button* c8 = createbutton(100, 550, 200, 50, YELLOW, "ä»¥å­¦å·æ£€ç´¢");
+    struct button* c9 = createbutton(400, 200, 200, 50, YELLOW, "ä»¥å§“åæ£€ç´¢");
+    struct button* c10 = createbutton(400, 250, 200, 50, YELLOW, "å„åˆ†æ•°æ®µåˆ†å¸ƒ");
+    struct button* c11 = createbutton(400, 300, 200, 50, YELLOW, "åˆ—å‡ºä¿¡æ¯");
+    struct button* c12 = createbutton(400, 350, 200, 50, YELLOW, "å†™å…¥æ–‡ä»¶");
+    struct button* c13 = createbutton(400, 400, 200, 50, YELLOW, "è¯»å–æ–‡ä»¶");
+    struct button* c0 = createbutton(400, 450, 200, 50, YELLOW, "é€€å‡ºç¨‹åº");
 
     int choice_num = -1;
     while (1) {
-        BeginBatchDraw();       // ¿ªÊ¼ÅúÁ¿»æÍ¼
+        BeginBatchDraw();       // å¼€å§‹æ‰¹é‡ç»˜å›¾
         putimage(0, 0, &mm);
         drawbutton(c1);
         drawbutton(c2);
@@ -790,7 +790,7 @@ void menu_display() {
             break;
         }
 
-        EndBatchDraw();           // ½áÊøÅúÁ¿»æÍ¼           
+        EndBatchDraw();           // ç»“æŸæ‰¹é‡ç»˜å›¾           
     }
     closegraph();
     choice(choice_num);
@@ -801,15 +801,15 @@ void c1_display() {
     initgraph(1240, 960);
     IMAGE mm;
     loadimage(&mm, "background.png", 1240, 960);
-    struct button* back_to_menu = createbutton(0,0,200,50,YELLOW,"·µ»Ø²Ëµ¥");
+    struct button* back_to_menu = createbutton(0,0,200,50,YELLOW,"è¿”å›èœå•");
     while (1) {
         BeginBatchDraw();
         putimage(0, 0, &mm);
         drawbutton(back_to_menu);
         MOUSEMSG m = GetMouseMsg();
-        outtextxy(0, 100, "Â¼Èë³É¹¦");
-        outtextxy(0,150,("Ñ§ÉúÈËÊı£º"+ std::to_string(REAL_STUNUM)).c_str());
-        outtextxy(0, 200, ("¿ÆÄ¿Êı£º" + std::to_string(REAL_COURSENUM)).c_str());
+        outtextxy(0, 100, "å½•å…¥æˆåŠŸ");
+        outtextxy(0,150,("å­¦ç”Ÿäººæ•°ï¼š"+ std::to_string(REAL_STUNUM)).c_str());
+        outtextxy(0, 200, ("ç§‘ç›®æ•°ï¼š" + std::to_string(REAL_COURSENUM)).c_str());
         if (clickbutton(back_to_menu, m)) {
             
             break;
@@ -825,14 +825,14 @@ void c2_display() {
 	initgraph(1240, 960);
 	IMAGE mm;
 	loadimage(&mm, "background.png", 1240, 960);
-	struct button* back_to_menu = createbutton(1040,910,200,50,YELLOW,"·µ»Ø²Ëµ¥");
+	struct button* back_to_menu = createbutton(1040,910,200,50,YELLOW,"è¿”å›èœå•");
     while (1) {
 		BeginBatchDraw();
 		putimage(0, 0, &mm);
 		drawbutton(back_to_menu);
 		MOUSEMSG m = GetMouseMsg();
-		outtextxy(0, 910, "¼ÆËã³É¹¦");
-		outtextxy(0, 0, "¸÷¿Æ×Ü·Ö¾ù·Ö");
+		outtextxy(0, 910, "è®¡ç®—æˆåŠŸ");
+		outtextxy(0, 0, "å„ç§‘æ€»åˆ†å‡åˆ†");
         for (int i = 0; i < REAL_COURSENUM; i++) {
 			char course[20];
 			sprintf(course, "Course %d", i + 1);
@@ -863,16 +863,16 @@ void c3_display() {
 	initgraph(1240, 960);
 	IMAGE mm;
 	loadimage(&mm, "background.png", 1240, 960);
-	struct button* back_to_menu = createbutton(1040,910,200,50,YELLOW,"·µ»Ø²Ëµ¥");
+	struct button* back_to_menu = createbutton(1040,910,200,50,YELLOW,"è¿”å›èœå•");
     while (1) {
 		BeginBatchDraw();
 		putimage(0, 0, &mm);
 		drawbutton(back_to_menu);
 		MOUSEMSG m = GetMouseMsg();
 
-		outtextxy(0, 910, "¼ÆËã³É¹¦");
-        outtextxy(0, 0, "¸÷Ñ§Éú×Ü·Ö¾ù·Ö");
-        settextstyle(20, 0, "¿¬Ìå");
+		outtextxy(0, 910, "è®¡ç®—æˆåŠŸ");
+        outtextxy(0, 0, "å„å­¦ç”Ÿæ€»åˆ†å‡åˆ†");
+        settextstyle(20, 0, "æ¥·ä½“");
         setbkmode(TRANSPARENT);
 
         outtextxy(10, 30, "ID");
@@ -923,14 +923,14 @@ void c4_display() {
 	initgraph(1240, 960);
 	IMAGE mm;
 	loadimage(&mm, "background.png", 1240, 960);
-	struct button* back_to_menu = createbutton(1040,910,200,50,YELLOW,"·µ»Ø²Ëµ¥");
+	struct button* back_to_menu = createbutton(1040,910,200,50,YELLOW,"è¿”å›èœå•");
     while (1) {
 		BeginBatchDraw();
 		putimage(0, 0, &mm);
 		drawbutton(back_to_menu);
 		MOUSEMSG m = GetMouseMsg();
-		outtextxy(0, 910, "ÅÅĞò³É¹¦");
-		outtextxy(0, 0, "Ñ§Éú×Ü·Ö½µĞò");
+		outtextxy(0, 910, "æ’åºæˆåŠŸ");
+		outtextxy(0, 0, "å­¦ç”Ÿæ€»åˆ†é™åº");
 		outtextxy(10, 30, "ID");
 		outtextxy(100, 30, "Name");
         for (int i = 0; i < REAL_COURSENUM; ++i) {
@@ -978,14 +978,14 @@ void c5_display() {
 	initgraph(1240, 960);
 	IMAGE mm;
 	loadimage(&mm, "background.png", 1240, 960);
-	struct button* back_to_menu = createbutton(1040,910,200,50,YELLOW,"·µ»Ø²Ëµ¥");
+	struct button* back_to_menu = createbutton(1040,910,200,50,YELLOW,"è¿”å›èœå•");
     while (1) {
 		BeginBatchDraw();
 		putimage(0, 0, &mm);
 		drawbutton(back_to_menu);
 		MOUSEMSG m = GetMouseMsg();
-		outtextxy(0, 910, "ÅÅĞò³É¹¦");
-		outtextxy(0, 0, "Ñ§Éú×Ü·ÖÉıĞò");
+		outtextxy(0, 910, "æ’åºæˆåŠŸ");
+		outtextxy(0, 0, "å­¦ç”Ÿæ€»åˆ†å‡åº");
 		outtextxy(10, 30, "ID");
 		outtextxy(100, 30, "Name");
         for (int i = 0; i < REAL_COURSENUM; ++i) {
@@ -1032,14 +1032,14 @@ void c6_display() {
     initgraph(1240, 960);
     IMAGE mm;
     loadimage(&mm, "background.png", 1240, 960);
-    struct button* back_to_menu = createbutton(1040, 910, 200, 50, YELLOW, "·µ»Ø²Ëµ¥");
+    struct button* back_to_menu = createbutton(1040, 910, 200, 50, YELLOW, "è¿”å›èœå•");
     while (1) {
         BeginBatchDraw();
         putimage(0, 0, &mm);
         drawbutton(back_to_menu);
         MOUSEMSG m = GetMouseMsg();
-        outtextxy(0, 910, "ÅÅĞò³É¹¦");
-        outtextxy(0, 0, "Ñ§ºÅÉıĞò");
+        outtextxy(0, 910, "æ’åºæˆåŠŸ");
+        outtextxy(0, 0, "å­¦å·å‡åº");
         outtextxy(10, 30, "ID");
         outtextxy(100, 30, "Name");
         for (int i = 0; i < REAL_COURSENUM; ++i) {
@@ -1086,14 +1086,14 @@ void c7_display() {
 	initgraph(1240, 960);
 	IMAGE mm;
 	loadimage(&mm, "background.png", 1240, 960);
-	struct button* back_to_menu = createbutton(1040, 910, 200, 50, YELLOW, "·µ»Ø²Ëµ¥");
+	struct button* back_to_menu = createbutton(1040, 910, 200, 50, YELLOW, "è¿”å›èœå•");
     while (1) {
 		BeginBatchDraw();
 		putimage(0, 0, &mm);
 		drawbutton(back_to_menu);
 		MOUSEMSG m = GetMouseMsg();
-		outtextxy(0, 910, "ÅÅĞò³É¹¦");
-		outtextxy(0, 0, "Ê××ÖÄ¸Ë³Ğò");
+		outtextxy(0, 910, "æ’åºæˆåŠŸ");
+		outtextxy(0, 0, "é¦–å­—æ¯é¡ºåº");
 		outtextxy(10, 30, "ID");
 		outtextxy(100, 30, "Name");
         for (int i = 0; i < REAL_COURSENUM; ++i) {
@@ -1140,15 +1140,15 @@ void c8_display() {
 	initgraph(1240, 960);
 	IMAGE mm;
 	loadimage(&mm, "background.png", 1240, 960);
-	struct button* back_to_menu = createbutton(1040, 910, 200, 50, YELLOW, "·µ»Ø²Ëµ¥");
+	struct button* back_to_menu = createbutton(1040, 910, 200, 50, YELLOW, "è¿”å›èœå•");
     while (1) {
 		BeginBatchDraw();
 		putimage(0, 0, &mm);
 		drawbutton(back_to_menu);
 		MOUSEMSG m = GetMouseMsg();
         if (match_id == -1) {
-            outtextxy(0, 910, "²éÑ¯Ê§°Ü");
-            outtextxy(0, 0, "ÒÔÑ§ºÅ¼ìË÷");
+            outtextxy(0, 910, "æŸ¥è¯¢å¤±è´¥");
+            outtextxy(0, 0, "ä»¥å­¦å·æ£€ç´¢");
             
             if (clickbutton(back_to_menu, m)) {
 				break;
@@ -1156,8 +1156,8 @@ void c8_display() {
             EndBatchDraw();
         }
         else {
-            outtextxy(0, 910, "²éÑ¯³É¹¦");
-            outtextxy(0, 0, "ÒÔÑ§ºÅ¼ìË÷");
+            outtextxy(0, 910, "æŸ¥è¯¢æˆåŠŸ");
+            outtextxy(0, 0, "ä»¥å­¦å·æ£€ç´¢");
             outtextxy(10, 30, "ID");
             outtextxy(100, 30, "Name");
             for (int i = 0; i < REAL_COURSENUM; ++i) {
@@ -1207,15 +1207,15 @@ void c9_display() {
 	initgraph(1240, 960);
 	IMAGE mm;
 	loadimage(&mm, "background.png", 1240, 960);
-	struct button* back_to_menu = createbutton(1040, 910, 200, 50, YELLOW, "·µ»Ø²Ëµ¥");
+	struct button* back_to_menu = createbutton(1040, 910, 200, 50, YELLOW, "è¿”å›èœå•");
     while (1) {
 		BeginBatchDraw();
 		putimage(0, 0, &mm);
 		drawbutton(back_to_menu);
 		MOUSEMSG m = GetMouseMsg();
         if (match_name == -1) {
-            outtextxy(0, 910, "²éÑ¯Ê§°Ü");
-            outtextxy(0, 0, "ÒÔĞÕÃû¼ìË÷");
+            outtextxy(0, 910, "æŸ¥è¯¢å¤±è´¥");
+            outtextxy(0, 0, "ä»¥å§“åæ£€ç´¢");
             if (clickbutton(back_to_menu, m)) {
 				break;
 			}
@@ -1224,8 +1224,8 @@ void c9_display() {
 
         }
         else {
-            outtextxy(0, 910, "²éÑ¯³É¹¦");
-            outtextxy(0, 0, "ÒÔĞÕÃû¼ìË÷");
+            outtextxy(0, 910, "æŸ¥è¯¢æˆåŠŸ");
+            outtextxy(0, 0, "ä»¥å§“åæ£€ç´¢");
             outtextxy(10, 30, "ID");
             outtextxy(100, 30, "Name");
             for (int i = 0; i < REAL_COURSENUM; ++i) {
@@ -1274,14 +1274,14 @@ void c10_display() {
 	initgraph(1240, 960);
 	IMAGE mm;
 	loadimage(&mm, "background.png", 1240, 960);
-	struct button* back_to_menu = createbutton(1040, 910, 200, 50, YELLOW, "·µ»Ø²Ëµ¥");
+	struct button* back_to_menu = createbutton(1040, 910, 200, 50, YELLOW, "è¿”å›èœå•");
     while (1) {
 		BeginBatchDraw();
 		putimage(0, 0, &mm);
 		drawbutton(back_to_menu);
 		MOUSEMSG m = GetMouseMsg();
-		outtextxy(0, 910, "Í³¼Æ³É¹¦");
-		outtextxy(0, 0, "¸÷·ÖÊı¶Î·Ö²¼");
+		outtextxy(0, 910, "ç»Ÿè®¡æˆåŠŸ");
+		outtextxy(0, 0, "å„åˆ†æ•°æ®µåˆ†å¸ƒ");
 		outtextxy(10, 30, "Course");
 		outtextxy(200, 30, "A");
 		outtextxy(300, 30, "B");
@@ -1327,14 +1327,14 @@ void c11_display() {
 	initgraph(1240, 960);
 	IMAGE mm;
 	loadimage(&mm, "background.png", 1240, 960);
-	struct button* back_to_menu = createbutton(1040, 910, 200, 50, YELLOW, "·µ»Ø²Ëµ¥");
+	struct button* back_to_menu = createbutton(1040, 910, 200, 50, YELLOW, "è¿”å›èœå•");
     while (1) {
 		BeginBatchDraw();
 		putimage(0, 0, &mm);
 		drawbutton(back_to_menu);
 		MOUSEMSG m = GetMouseMsg();
-		outtextxy(0, 910, "ÁĞ³ö³É¹¦");
-		outtextxy(0, 0, "ÁĞ³öĞÅÏ¢");
+		outtextxy(0, 910, "åˆ—å‡ºæˆåŠŸ");
+		outtextxy(0, 0, "åˆ—å‡ºä¿¡æ¯");
 		outtextxy(10, 30, "ID");
 		outtextxy(100, 30, "Name");
         for (int i = 0; i < REAL_COURSENUM; ++i) {
@@ -1369,8 +1369,8 @@ void c11_display() {
 			outtextxy(300 + REAL_COURSENUM * 100, 50 + i * 20, averageStr);
 
         }
-        // ¸÷¿Æ×Ü·Ö¾ù·Ö
-        outtextxy(0, 50 + REAL_STUNUM * 20, "¸÷¿Æ×Ü·Ö¾ù·Ö");
+        // å„ç§‘æ€»åˆ†å‡åˆ†
+        outtextxy(0, 50 + REAL_STUNUM * 20, "å„ç§‘æ€»åˆ†å‡åˆ†");
         for (int i = 0; i < REAL_COURSENUM; i++) {
 			char course[20];
 			sprintf(course, "Course %d", i + 1);
@@ -1401,13 +1401,13 @@ void c12_display() {
 	initgraph(1240, 960);
 	IMAGE mm;
 	loadimage(&mm, "background.png", 1240, 960);
-	struct button* back_to_menu = createbutton(1040, 910, 200, 50, YELLOW, "·µ»Ø²Ëµ¥");
+	struct button* back_to_menu = createbutton(1040, 910, 200, 50, YELLOW, "è¿”å›èœå•");
     while (1) {
 		BeginBatchDraw();
 		putimage(0, 0, &mm);
 		drawbutton(back_to_menu);
 		MOUSEMSG m = GetMouseMsg();
-		outtextxy(0, 910, "Ğ´Èë³É¹¦");
+		outtextxy(0, 910, "å†™å…¥æˆåŠŸ");
         if (clickbutton(back_to_menu, m)) {
 			break;
 		}
